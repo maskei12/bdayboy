@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Stephen!</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #14002e, #3b087b, #091b47);
+    color: white;
+  }
+
+  .birthday {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    line-height: 1.4;
+    margin-bottom: 25px;
+  }
+
+  .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(60px) rotate(20deg) scale(0.5);
+    animation: appear 0.7s forwards;
+    text-shadow: 0 0 20px currentColor;
+  }
+
+  @keyframes appear {
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(0) scale(1);
+    }
+  }
+
+  .message {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    opacity: 0;
+    animation: fadeIn 2s 3s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .sparkle {
+    position: absolute;
+    top: -30px;
+    animation: fall linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(720deg);
+    }
+  }
+
+  .balloon {
+    position: absolute;
+    bottom: -150px;
+    font-size: 50px;
+    animation: floatUp 9s linear infinite;
+  }
+
+  @keyframes floatUp {
+    to {
+      transform: translateY(-120vh) rotate(15deg);
+    }
+  }
+
+  button {
+    margin-top: 30px;
+    padding: 13px 25px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4fbc;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff4fbc;
+  }
+
+  button:hover {
+    transform: scale(1.08);
+  }
+</style>
+</head>
+
+<body>
+  <div class="birthday">
+    <h1 id="greeting"></h1>
+    <p class="message">
+      🎂 Wishing you a day filled with love, joy, and amazing memories! 🎉
+    </p>
+    <button onclick="celebrate()">🎊 Celebrate!</button>
+  </div>
+
+<script>
+  const greeting = "Happy Birthday Stephen Medina!";
+  const colors = [
+    "#ff4fbc", "#ffd166", "#06d6a0",
+    "#4cc9f0", "#ffffff", "#ff784f"
+  ];
+
+  const heading = document.getElementById("greeting");
+
+  [...greeting].forEach((letter, i) => {
+    const span = document.createElement("span");
+    span.className = "letter";
+    span.textContent = letter === " " ? "\u00A0" : letter;
+    span.style.color = colors[i % colors.length];
+    span.style.animationDelay = `${i * 0.09}s`;
+    heading.appendChild(span);
+  });
+
+  function makeConfetti() {
+    const item = document.createElement("div");
+    item.className = "sparkle";
+    item.textContent = ["🎉", "✨", "🎊", "⭐", "💖"][
+      Math.floor(Math.random() * 5)
+    ];
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.fontSize = (15 + Math.random() * 25) + "px";
+    item.style.animationDuration = (3 + Math.random() * 5) + "s";
+    document.body.appendChild(item);
+
+    setTimeout(() => item.remove(), 8500);
+  }
+
+  function makeBalloon() {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.textContent = ["🎈", "🎈", "💖"][
+      Math.floor(Math.random() * 3)
+    ];
+    balloon.style.left = Math.random() * 95 + "vw";
+    balloon.style.animationDuration = (7 + Math.random() * 5) + "s";
+    document.body.appendChild(balloon);
+
+    setTimeout(() => balloon.remove(), 12000);
+  }
+
+  setInterval(makeConfetti, 250);
+  setInterval(makeBalloon, 1800);
+
+  function celebrate() {
+    for (let i = 0; i < 35; i++) {
+      setTimeout(makeConfetti, i * 50);
+    }
+
+    heading.animate([
+      { transform: "scale(1)" },
+      { transform: "scale(1.12)" },
+      { transform: "scale(1)" }
+    ], {
+      duration: 600,
+      iterations: 2
+    });
+  }
+</script>
+</body>
+</html>
